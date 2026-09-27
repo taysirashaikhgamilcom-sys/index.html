@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CampusXchange | Student Marketplace</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #172033;
+}
+
+/* NAVBAR */
+nav {
+    height: 70px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.logo span {
+    color: #111827;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+
+.sell-btn {
+    background: #2563eb;
+    color: white !important;
+    padding: 11px 18px;
+    border-radius: 8px;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: white;
+    padding: 70px 7%;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 46px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.search-box {
+    max-width: 700px;
+    margin: auto;
+    display: flex;
+    background: white;
+    padding: 7px;
+    border-radius: 12px;
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.search-box button {
+    border: none;
+    background: #111827;
+    color: white;
+    padding: 0 25px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* CONTAINER */
+.container {
+    width: 86%;
+    max-width: 1250px;
+    margin: 40px auto;
+}
+
+/* SECTION HEADER */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    font-size: 28px;
+}
+
+/* CATEGORIES */
+.categories {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.category {
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 12px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.category:hover,
+.category.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* SORT */
+#sortSelect {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: white;
+}
+
+/* PRODUCTS */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: 0.25s;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.product-image {
+    width: 100%;
+    height: 190px;
+    background: #eef2ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 70px;
+}
+
+.product-info {
+    padding: 18px;
+}
+
+.product-info h3 {
+    margin-bottom: 8px;
+}
+
+.price {
+    color: #2563eb;
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.condition {
+    font-size: 13px;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 5px 9px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.seller {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.details-btn {
+    flex: 1;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.wish-btn {
+    width: 42px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* EMPTY */
+.empty {
+    text-align: center;
+    padding: 60px;
+    color: #6b7280;
+    display: none;
+}
+
+/* MODAL */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.modal-box {
+    background: white;
+    width: 100%;
+    max-width: 550px;
+    border-radius: 15px;
+    padding: 30px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.close {
+    font-size: 25px;
+    cursor: pointer;
+    color: #555;
+}
+
+.modal-image {
+    height: 180px;
+    background: #eef2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-box h2 {
+    margin-bottom: 10px;
+}
+
+.modal-box p {
+    margin: 10px 0;
+    color: #555;
+}
+
+/* FORM */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+}
+
+.form-group textarea {
+    height: 90px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* STATS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 50px 0;
+}
+
+.stat {
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.stat h2 {
+    color: #2563eb;
+    font-size: 30px;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 70px;
+    background: #111827;
+    color: white;
+    padding: 40px 7%;
+    text-align: center;
+}
+
+footer h2 {
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #9ca3af;
+}
+
+/* MOBILE */
+@media(max-width: 1000px) {
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+
+    nav {
+        padding: 0 5%;
+    }
+
+    .nav-links a:not(.sell-btn) {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .search-box {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .search-box button {
+        padding: 12px;
+    }
+
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+
+    <div class="logo">
+        Campus<span>Xchange</span>
+    </div>
+
+    <div class="nav-links">
+        <a onclick="scrollToProducts()">Home</a>
+        <a onclick="showWishlist()">Wishlist ❤️</a>
+        <a class="sell-btn" onclick="openSellModal()">+ Sell Item</a>
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <h1>Buy. Sell. Exchange.</h1>
+
+    <p>
+        Your campus marketplace for students.
+    </p>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search books, calculators, cycles..."
+            onkeyup="searchProducts()"
+        >
+
+        <button onclick="searchProducts()">
+            Search
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- MAIN -->
+<div class="container">
+
+    <!-- CATEGORIES -->
+    <div class="section-header">
+
+        <h2>Browse Categories</h2>
+
+    </div>
+
+    <div class="categories">
+
+        <div class="category active"
+             onclick="filterCategory('All', this)">
+            All
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Books', this)">
+            📚 Books
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Electronics', this)">
+            💻 Electronics
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Calculators', this)">
+            🧮 Calculators
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Records', this)">
+            📗 Cycles
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Hand written Assigments', this)">
+            🩻 Bags
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Gaming', this)">
+            🎮 Gaming
+        </div>
+
+        <div class="category"
+             onclick="filterCategory('Other', this)">
+            📦 Other
+        </div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="section-header">
+
+        <h2>Latest Listings</h2>
+
+        <select id="sortSelect" onchange="sortProducts()">
+            <option value="latest">Latest</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+        </select>
+
+    </div>
+
+
+    <div class="products" id="productContainer"></div>
+
+    <div class="empty" id="emptyMessage">
+        <h2>No items found</h2>
+        <p>Try another search or category.</p>
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <h2 id="totalItems">0</h2>
+            <p>Items Listed</p>
+        </div>
+
+        <div class="stat">
+            <h2>7</h2>
+            <p>Categories</p>
+        </div>
+
+        <div class="stat">
+            <h2>100%</h2>
+            <p>Student Focused</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PRODUCT DETAILS MODAL -->
+
+<div class="modal" id="detailsModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Item Details</h2>
+
+            <span class="close"
+                  onclick="closeModal('detailsModal')">
+                ×
+            </span>
+
+        </div>
+
+        <div class="modal-image" id="modalImage">
+            📦
+        </div>
+
+        <h2 id="modalTitle"></h2>
+
+        <h2 class="price" id="modalPrice"></h2>
+
+        <p id="modalDescription"></p>
+
+        <p>
+            <strong>Condition:</strong>
+            <span id="modalCondition"></span>
+        </p>
+
+        <p>
+            <strong>Category:</strong>
+            <span id="modalCategory"></span>
+        </p>
+
+        <hr>
+
+        <p>
+            <strong>Seller:</strong>
+            <span id="modalSeller"></span>
+        </p>
+
+        <p>
+            <strong>Department:</strong>
+            <span id="modalDepartment"></span>
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            Campus
+        </p>
+
+        <button class="submit-btn"
+                onclick="contactSeller()">
+            Contact Seller
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SELL MODAL -->
+
+<div class="modal" id="sellModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Sell an Item</h2>
+
+            <span class="close"
+                  onclick="closeModal('sellModal')">
+                ×
+            </span>
+
+        </div>
+
+        <form id="sellForm">
+
+            <div class="form-group">
+
+                <label>Item Name</label>
+
+                <input
+                    type="text"
+                    id="itemName"
+                    placeholder="Example: Engineering Mathematics Book"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Category</label>
+
+                <select id="itemCategory" required>
+
+                    <option value="">Select Category</option>
+
+                    <option>Books</option>
+                    <option>Electronics</option>
+                    <option>Calculators</option>
+                    <option>Cycles</option>
+                    <option>Bags</option>
+                    <option>Gaming</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Price (₹)</label>
+
+                <input
+                    type="number"
+                    id="itemPrice"
+                    placeholder="Enter price"
+                    min="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Condition</label>
+
+                <select id="itemCondition" required>
+
+                    <option value="">Select Condition</option>
+
+                    <option>New</option>
+                    <option>Like New</option>
+                    <option>Good</option>
+                    <option>Used</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Description</label>
+
+                <textarea
+                    id="itemDescription"
+                    placeholder="Describe your item..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Seller Name</label>
+
+                <input
+                    type="text"
+                    id="sellerName"
+                    placeholder="Your name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <input
+                    type="text"
+                    id="sellerDepartment"
+                    placeholder="Example: CSE AIML"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Contact Number</label>
+
+                <input
+                    type="tel"
+                    id="sellerContact"
+                    placeholder="Your phone number"
+                    required
+                >
+
+            </div>
+
+
+            <button class="submit-btn"
+                    type="submit">
+
+                Publish Listing
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h2>CampusXchange</h2>
+
+    <p>
+        A student-to-student marketplace for your campus.
+    </p>
+
+    <br>
+
+    <p>
+        © 2026 CampusXchange | College Project
+    </p>
+
+</footer>
+
+
+<script>
+
+/* SAMPLE PRODUCTS */
+
+let products = [
+
+    {
+        id: 1,
+        name: "Engineering Mathematics Book",
+        category: "Books",
+        price: 350,
+        condition: "Good",
+        seller: "Rahul",
+        department: "CSE",
+        description: "VTU engineering mathematics textbook with notes.",
+        icon: "📚"
+    },
+
+    {
+        id: 2,
+        name: "Casio Scientific Calculator",
+        category: "Calculators",
+        price: 650,
+        condition: "Like New",
+        seller: "Taysir",
+        department: "CSE AIML",
+        description: "Scientific calculator suitable for engineering students.",
+        icon: "🧮"
+    },
+
+    {
+        id: 3,
+        name: "HP Laptop",
+        category: "Electronics",
+        price: 28000,
+        condition: "Good",
+        seller: "Arjun",
+        department: "ISE",
+        description: "Laptop suitable for programming and college work.",
+        icon: "💻"
+    },
+
+    {
+        id: 4,
+        name: "Mountain Bicycle",
+        category: "Cycles",
+        price: 5500,
+        condition: "Used",
+        seller: "Mohammed",
+        department: "ECE",
+        description: "Mountain bicycle in good working condition.",
+        icon: "🚲"
+    },
+
+    {
+        id: 5,
+        name: "College Backpack",
+        category: "Bags",
+        price: 700,
+        condition: "Good",
+        seller: "Aisha",
+        department: "CSE",
+        description: "Spacious backpack suitable for laptops and books.",
+        icon: "🎒"
+    },
+
+    {
+        id: 6,
+        name: "Gaming Mouse",
+        category: "Gaming",
+        price: 900,
+        condition: "Like New",
+        seller: "Vishal",
+        department: "AIML",
+        description: "RGB gaming mouse with adjustable DPI.",
+        icon: "🎮"
+    },
+
+    {
+        id: 7,
+        name: "Arduino Uno Kit",
+        category: "Electronics",
+        price: 850,
+        condition: "Good",
+        seller: "Sameer",
+        department: "AIML",
+        description: "Arduino kit useful for mini projects.",
+        icon: "🔌"
+    },
+
+    {
+        id: 8,
+        name: "Data Structures Notes",
+        category: "Books",
+        price: 200,
+        condition: "Good",
+        seller: "Adnan",
+        department: "CSE",
+        description: "Handwritten data structures notes.",
+        icon: "📖"
+    }
+
+];
+
+
+/* LOAD SAVED PRODUCTS */
+
+let savedProducts =
+    JSON.parse(localStorage.getItem("campusProducts"));
+
+if (savedProducts && savedProducts.length > 0) {
+
+    products = savedProducts;
+
+}
+
+
+let currentCategory = "All";
+let wishlist =
+    JSON.parse(localStorage.getItem("campusWishlist")) || [];
+
+
+/* DISPLAY PRODUCTS */
+
+function displayProducts(list = products) {
+
+    const container =
+        document.getElementById("productContainer");
+
+    const empty =
+        document.getElementById("emptyMessage");
+
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+
+        empty.style.display = "block";
+
+        return;
+
+    }
+
+    empty.style.display = "none";
+
+
+    list.forEach(product => {
+
+        const isLiked =
+            wishlist.includes(product.id);
+
+        const card = document.createElement("div");
+
+        card.className = "product-card";
+
+
+        card.innerHTML = `
+
+            <div class="product-image">
+                ${product.icon || "📦"}
+            </div>
+
+            <div class="product-info">
+
+                <h3>${escapeHTML(product.name)}</h3>
+
+                <div class="price">
+                    ₹${Number(product.price).toLocaleString("en-IN")}
+                </div>
+
+                <span class="condition">
+                    ${escapeHTML(product.condition)}
+                </span>
+
+                <div class="seller">
+                    Seller: ${escapeHTML(product.seller)}
+                    <br>
+                    ${escapeHTML(product.department)}
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(${product.id})">
+                        View Details
+                    </button>
+
+                    <button
+                        class="wish-btn"
+                        onclick="toggleWishlist(${product.id})">
+
+                        ${isLiked ? "❤️" : "♡"}
+
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        container.appendChild(card);
+
+    });
+
+
+    document.getElementById("totalItems").innerText =
+        products.length;
+
+}
+
+
+/* SEARCH */
+
+function searchProducts() {
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    let filtered = products.filter(product => {
+
+        const matchesSearch =
+            product.name.toLowerCase().includes(search) ||
+            product.category.toLowerCase().includes(search) ||
+            product.seller.toLowerCase().includes(search);
+
+
+        const matchesCategory =
+            currentCategory === "All" ||
+            product.category === currentCategory;
+
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+
+    displayProducts(filtered);
+
+}
+
+
+/* CATEGORY FILTER */
+
+function filterCategory(category, element) {
+
+    currentCategory = category;
+
+
+    document
+        .querySelectorAll(".category")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    element.classList.add("active");
+
+
+    searchProducts();
+
+}
+
+
+/* SORT PRODUCTS */
+
+function sortProducts() {
+
+    const type =
+        document.getElementById("sortSelect").value;
+
+
+    let sorted = [...products];
+
+
+    if (type === "low") {
+
+        sorted.sort((a, b) => a.price - b.price);
+
+    }
+
+
+    if (type === "high") {
+
+        sorted.sort((a, b) => b.price - a.price);
+
+    }
+
+
+    if (type === "latest") {
+
+        sorted.sort((a, b) => b.id - a.id);
+
+    }
+
+
+    displayProducts(sorted);
+
+}
+
+
+/* PRODUCT DETAILS */
+
+function showDetails(id) {
+
+    const product =
+        products.find(p => p.id === id);
+
+
+    if (!product) return;
+
+
+    document.getElementById("modalImage").innerText =
+        product.icon || "📦";
+
+    document.getElementById("modalTitle").innerText =
+        product.name;
+
+    document.getElementById("modalPrice").innerText =
+        "₹" + Number(product.price).toLocaleString("en-IN");
+
+    document.getElementById("modalDescription").innerText =
+        product.description;
+
+    document.getElementById("modalCondition").innerText =
+        product.condition;
+
+    document.getElementById("modalCategory").innerText =
+        product.category;
+
+    document.getElementById("modalSeller").innerText =
+        product.seller;
+
+    document.getElementById("modalDepartment").innerText =
+        product.department;
+
+
+    document.getElementById("detailsModal").style.display =
+        "flex";
+
+}
+
+
+/* CONTACT SELLER */
+
+function contactSeller() {
+
+    alert(
+        "Seller contact details would be shown here in the real application."
+    );
+
+}
+
+
+/* OPEN SELL MODAL */
+
+function openSellModal() {
+
+    document.getElementById("sellModal").style.display =
+        "flex";
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal(id) {
+
+    document.getElementById(id).style.display =
+        "none";
+
+}
+
+
+/* SELL FORM */
+
+document
+    .getElementById("sellForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const newProduct = {
+
+            id: Date.now(),
+
+            name:
+                document.getElementById("itemName").value,
+
+            category:
+                document.getElementById("itemCategory").value,
+
+            price:
+                Number(
+                    document.getElementById("itemPrice").value
+                ),
+
+            condition:
+                document.getElementById("itemCondition").value,
+
+            description:
+                document.getElementById("itemDescription").value,
+
+            seller:
+                document.getElementById("sellerName").value,
+
+            department:
+                document.getElementById("sellerDepartment").value,
+
+            contact:
+                document.getElementById("sellerContact").value,
+
+            icon:
+                getCategoryIcon(
+                    document.getElementById("itemCategory").value
+                )
+
+        };
+
+
+        products.unshift(newProduct);
+
+
+        localStorage.setItem(
+            "campusProducts",
+            JSON.stringify(products)
+        );
+
+
+        displayProducts(products);
+
+
+        this.reset();
+
+
+        closeModal("sellModal");
+
+
+        alert("Your item has been listed successfully!");
+
+
+        scrollToProducts();
+
+    });
+
+
+/* CATEGORY ICON */
+
+function getCategoryIcon(category) {
+
+    const icons = {
+
+        Books: "📚",
+        Electronics: "💻",
+        Calculators: "🧮",
+        Cycles: "🚲",
+        Bags: "🎒",
+        Gaming: "🎮",
+        Other: "📦"
+
+    };
+
+
+    return icons[category] || "📦";
+
+}
+
+
+/* WISHLIST */
+
+function toggleWishlist(id) {
+
+    if (wishlist.includes(id)) {
+
+        wishlist =
+            wishlist.filter(item => item !== id);
+
+    } else {
+
+        wishlist.push(id);
+
+    }
+
+
+    localStorage.setItem(
+        "campusWishlist",
+        JSON.stringify(wishlist)
+    );
+
+
+    searchProducts();
+
+}
+
+
+/* SHOW WISHLIST */
+
+function showWishlist() {
+
+    const likedProducts =
+        products.filter(product =>
+            wishlist.includes(product.id)
+        );
+
+
+    if (likedProducts.length === 0) {
+
+        alert("Your wishlist is empty.");
+
+        return;
+
+    }
+
+
+    displayProducts(likedProducts);
+
+
+    document
+        .getElementById("productContainer")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* SCROLL */
+
+function scrollToProducts() {
+
+    document
+        .getElementById("productContainer")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* CLOSE MODAL BY CLICKING OUTSIDE */
+
+window.onclick = function(event) {
+
+    const details =
+        document.getElementById("detailsModal");
+
+    const sell =
+        document.getElementById("sellModal");
+
+
+    if (event.target === details) {
+
+        details.style.display = "none";
+
+    }
+
+
+    if (event.target === sell) {
+
+        sell.style.display = "none";
+
+    }
+
+};
+
+
+/* INITIAL DISPLAY */
+
+displayProducts();
+
+</script>
+
+</body>
+</html>
